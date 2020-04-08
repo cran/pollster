@@ -24,7 +24,6 @@
 #' @import tidyr
 #' @import labelled
 #' @import rlang
-#' @importFrom lubridate as_date
 #'
 #' @examples
 #' moe_crosstab(df = illinois, x = voter, y = raceethnic, weight = weight)
@@ -42,7 +41,7 @@ moe_crosstab <- function(df, x, y, weight, remove = c(""),
 
   # build the table, either row percents or cell percents
   if(pct_type == "row"){
-    output <- df %>%
+    d.output <- df %>%
       filter(!is.na({{x}}),
              !is.na({{y}})) %>%
       mutate({{x}} := to_factor({{x}}),
@@ -64,7 +63,7 @@ moe_crosstab <- function(df, x, y, weight, remove = c(""),
       # move total row to end
       select(-one_of("n"), one_of("n"))
   } else if(pct_type == "cell"){
-    output <- df %>%
+    d.output <- df %>%
       filter(!is.na({{x}}),
              !is.na({{y}})) %>%
       mutate({{x}} := to_factor({{x}}),
@@ -89,23 +88,27 @@ moe_crosstab <- function(df, x, y, weight, remove = c(""),
 
   # convert to wide format if required
   if(format == "wide"){
-    output <- output %>%
-      pivot_wider(names_from = {{y}}, values_from = c(pct, moe))
+    d.output <- d.output %>%
+      pivot_wider(names_from = {{y}}, values_from = c(pct, moe), values_fill = list(pct = 0))
   }
 
   # remove n if required
   if(n == FALSE){
-    output <- select(output, -n)
+    d.output <- select(d.output, -n)
   }
-  # test if date
-  is.it.a.date <- is_date(df %>% pull({{x}}))
 
-  if(is.it.a.date == TRUE){
-    output %>%
+  # test if date or number
+  factor.true.type <- what_is_this_factor(pull(d.output, {{x}}))
+  if(factor.true.type == "date"){
+    d.output %>%
       as_tibble() %>%
-      mutate({{x}} := lubridate::as_date({{x}}))
+      mutate({{x}} := as.Date({{x}}, tryFormats = c("%Y-%m-%d", "%Y/%m/%d","%d-%m-%Y","%m-%d-%Y")))
+  } else if(factor.true.type == "number"){
+    d.output %>%
+      as_tibble() %>%
+      mutate({{x}} := as.numeric(as.character({{x}})))
   } else{
-    output %>%
+    d.output %>%
       as_tibble()
   }
 }

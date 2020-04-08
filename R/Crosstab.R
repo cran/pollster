@@ -22,7 +22,6 @@
 #' @import tidyr
 #' @import labelled
 #' @import rlang
-#' @importFrom lubridate as_date
 #'
 #' @examples
 #' crosstab(df = illinois, x = voter, y = raceethnic, weight = weight)
@@ -57,7 +56,7 @@ crosstab <- function(df, x, y, weight, remove = "", n = TRUE, pct_type = "row", 
     if(format == "wide"){
       d.output <- d.output %>%
         # Spread so x is rows and y is columns
-        pivot_wider(names_from = {{y}}, values_from = pct) %>%
+        pivot_wider(names_from = {{y}}, values_from = pct, values_fill = list(pct = 0)) %>%
         # move total row to end
         select(-one_of("n"), one_of("n")) %>%
         ungroup()
@@ -92,7 +91,7 @@ crosstab <- function(df, x, y, weight, remove = "", n = TRUE, pct_type = "row", 
       total.row <- d.output %>%
         group_by({{y}}, n) %>%
         summarise() %>%
-        pivot_wider(names_from = {{y}}, values_from = n) %>%
+        pivot_wider(names_from = {{y}}, values_from = n, values_fill = list(pct = 0)) %>%
         mutate({{x}} := "n")
 
       # spread the output table
@@ -100,7 +99,7 @@ crosstab <- function(df, x, y, weight, remove = "", n = TRUE, pct_type = "row", 
         # drop the n column
         select(-n) %>%
         # spread so x is rows and y is columns
-        pivot_wider(names_from = {{y}}, values_from = pct)
+        pivot_wider(names_from = {{y}}, values_from = pct, values_fill = list(pct = 0))
 
       # if n = TRUE, then add then n row
       # this causes the response column to switch from factor to character
@@ -135,7 +134,7 @@ crosstab <- function(df, x, y, weight, remove = "", n = TRUE, pct_type = "row", 
     if(format == "wide"){
       d.output <- d.output %>%
         # Spread so x is rows and y is columns
-        pivot_wider(names_from = {{y}}, values_from = pct) %>%
+        pivot_wider(names_from = {{y}}, values_from = pct, values_fill = list(pct = 0)) %>%
         # move total row to end
         select(-one_of("n"), one_of("n")) %>%
         ungroup()
@@ -147,13 +146,16 @@ crosstab <- function(df, x, y, weight, remove = "", n = TRUE, pct_type = "row", 
     }
   }
 
-  # test if date
-  is.it.a.date <- is_date(df %>% pull({{x}}))
-
-  if(is.it.a.date == TRUE){
+  # test if date or number
+  factor.true.type <- what_is_this_factor(pull(d.output, {{x}}))
+  if(factor.true.type == "date"){
     d.output %>%
       as_tibble() %>%
-      mutate({{x}} := lubridate::as_date({{x}}))
+      mutate({{x}} := as.Date({{x}}, tryFormats = c("%Y-%m-%d", "%Y/%m/%d","%d-%m-%Y","%m-%d-%Y")))
+  } else if(factor.true.type == "number"){
+    d.output %>%
+      as_tibble() %>%
+      mutate({{x}} := as.numeric(as.character({{x}})))
   } else{
     d.output %>%
       as_tibble()
