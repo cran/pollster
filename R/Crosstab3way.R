@@ -65,7 +65,7 @@ crosstab_3way <- function(df, x, y, z,
     if(str_to_lower(format) == "wide"){
       d.output <- d.output %>%
         pivot_wider(names_from = {{y}}, values_from = pct,
-                    values_fill = list(pct = 0))
+                    values_fill = list(pct = 0), names_sort = TRUE)
     }
   } else if(pct_type == "cell"){
     d.output <- df %>%
@@ -94,7 +94,7 @@ crosstab_3way <- function(df, x, y, z,
     if(str_to_lower(format) == "wide"){
       d.output <- d.output %>%
         pivot_wider(names_from = {{y}}, values_from = pct,
-                    values_fill = list(pct = 0))
+                    values_fill = list(pct = 0), names_sort = TRUE)
     }
   }
 
