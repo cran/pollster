@@ -396,31 +396,31 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Get at topline table with the margin of error in a separate column using the <code>moe_crosstab</code> function. By default, a z-score of 1.96 (95% confidence interval is used). Supply your own desired z-score using the <code>zscore</code> argument. Only row and cell percents are supported. By default, the table format is long because I anticipate making visualizations will be the most common use-case for this graphic.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">moe_crosstab</span>(illinois, educ6, voter, weight)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; # A tibble: 12 x 5</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;    educ6    voter       pct   moe     n</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;    &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  1 LT HS    Voted      42.5  1.75  3269</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  2 LT HS    Not voted  57.5  1.75  3269</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  3 HS       Voted      56.5  1.03  9474</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  4 HS       Not voted  43.5  1.03  9474</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  5 Some Col Voted      63.6  1.21  6525</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  6 Some Col Not voted  36.4  1.21  6525</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  7 AA       Voted      67.6  1.89  2500</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  8 AA       Not voted  32.4  1.89  2500</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  9 BA       Voted      73.6  1.14  6171</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 10 BA       Not voted  26.4  1.14  6171</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; 11 Post-BA  Voted      83.1  1.32  3320</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 12 Post-BA  Not voted  16.9  1.32  3320</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;    educ6    voter       pct   moe         n</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;    &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  1 LT HS    Voted      42.5  1.75  8999310.</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  2 LT HS    Not voted  57.5  1.75  8999310.</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  3 HS       Voted      56.5  1.03 26638087.</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  4 HS       Not voted  43.5  1.03 26638087.</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  5 Some Col Voted      63.6  1.21 18697544.</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  6 Some Col Not voted  36.4  1.21 18697544.</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  7 AA       Voted      67.6  1.89  7196039.</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  8 AA       Not voted  32.4  1.89  7196039.</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  9 BA       Voted      73.6  1.14 17447907.</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 10 BA       Not voted  26.4  1.14 17447907.</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; 11 Post-BA  Voted      83.1  1.32  9322214.</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 12 Post-BA  Not voted  16.9  1.32  9322214.</span></a></code></pre></div>
 <p>A wide format table looks like this.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">moe_crosstab</span>(illinois, educ6, voter, weight, <span class="dt">format =</span> <span class="st">&quot;wide&quot;</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 6</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;   educ6        n pct_Voted `pct_Not voted` moe_Voted `moe_Not voted`</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;   &lt;fct&gt;    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; 1 LT HS     3269      42.5            57.5      1.75            1.75</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; 2 HS        9474      56.5            43.5      1.03            1.03</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; 3 Some Col  6525      63.6            36.4      1.21            1.21</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; 4 AA        2500      67.6            32.4      1.89            1.89</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; 5 BA        6171      73.6            26.4      1.14            1.14</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; 6 Post-BA   3320      83.1            16.9      1.32            1.32</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;   educ6    pct_Voted `pct_Not voted` moe_Voted `moe_Not voted`         n</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;   &lt;fct&gt;        &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; 1 LT HS         42.5            57.5      1.75            1.75  8999310.</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; 2 HS            56.5            43.5      1.03            1.03 26638087.</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; 3 Some Col      63.6            36.4      1.21            1.21 18697544.</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; 4 AA            67.6            32.4      1.89            1.89  7196039.</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; 5 BA            73.6            26.4      1.14            1.14 17447907.</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; 6 Post-BA       83.1            16.9      1.32            1.32  9322214.</span></a></code></pre></div>
 <p><code>ggplot2</code> offers <a href="http://www.sthda.com/english/wiki/ggplot2-error-bars-quick-start-guide-r-software-and-data-visualization">multiple ways</a> to visualize the margin of error. Here is one good option. (Please note, if you don’t have ggplot2 &gt;= <a href="https://www.tidyverse.org/blog/2020/03/ggplot2-3-3-0/">3.3.0</a> you’ll get an error message.)</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">illinois <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2016</span>) <span class="op">%&gt;%</span></a>
@@ -436,18 +436,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">moe_wave_crosstab</span>(<span class="dt">df =</span> illinois, <span class="dt">x =</span> year, <span class="dt">y =</span> rv, <span class="dt">weight =</span> weight)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Joining, by = &quot;year&quot;</span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; # A tibble: 24 x 5</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;     year rv               pct   moe     n</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;    &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;  1  1996 Registered      77.7  1.49  3237</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;  2  1996 Not Registered  22.3  1.49  3237</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  3  1998 Registered      75.1  1.57  3133</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  4  1998 Not Registered  24.9  1.57  3133</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  5  2000 Registered      81.2  1.44  3039</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  6  2000 Not Registered  18.8  1.44  3039</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  7  2002 Registered      77.7  1.57  2953</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  8  2002 Not Registered  22.3  1.57  2953</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  9  2004 Registered      83.4  1.38  2930</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; 10  2004 Not Registered  16.6  1.38  2930</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;     year rv               pct   moe        n</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;    &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;  1  1996 Registered      77.7  1.49 7485319.</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;  2  1996 Not Registered  22.3  1.49 7485319.</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  3  1998 Registered      75.1  1.57 7364191.</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  4  1998 Not Registered  24.9  1.57 7364191.</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  5  2000 Registered      81.2  1.44 7276876.</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  6  2000 Not Registered  18.8  1.44 7276876.</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  7  2002 Registered      77.7  1.57 7185545.</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  8  2002 Not Registered  22.3  1.57 7185545.</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  9  2004 Registered      83.4  1.38 7719084.</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; 10  2004 Not Registered  16.6  1.38 7719084.</span></a>
 <a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; # … with 14 more rows</span></a></code></pre></div>
 </div>
 </div>
