@@ -1,7 +1,7 @@
 Package: pollster
 Type: Package
 Title: Calculate Crosstab and Topline Tables of Weighted Survey Data
-Version: 0.1.3
+Version: 0.1.4
 Author: John D. Johnson [aut, cre]
 Maintainer: John D. Johnson <john.d.johnson@marquette.edu>
 Description: Calculate common types of tables for weighted survey data.
@@ -22,9 +22,9 @@ Suggests: ggplot2 (>= 3.3.0), knitr, rmarkdown
 License: CC0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-08-24 15:11:59 UTC; johnsonjoh
+Packaged: 2022-10-26 20:00:18 UTC; johnsonjoh
 Repository: CRAN
-Date/Publication: 2020-08-25 09:50:02 UTC
+Date/Publication: 2022-10-26 21:02:35 UTC

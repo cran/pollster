@@ -36,6 +36,13 @@ moe_crosstab_3way <- function(df, x, y, z,
                               n = TRUE, pct_type = "row",
                               format = "long", zscore = 1.96,
                               unwt_n = FALSE){
+
+  # make sure no weights are NA
+  w <- df %>% pull({{weight}})
+  if(length(w[is.na(w)]) > 0){
+    stop("The weight variable contains missing values.", call. = FALSE)
+  }
+
   # make sure the arguments are all correct
   stopifnot(pct_type %in% c("row", "cell"),
             format %in% c("wide", "long"))
@@ -101,7 +108,8 @@ moe_crosstab_3way <- function(df, x, y, z,
     d.output <- d.output %>%
       pivot_wider(names_from = {{y}}, values_from = c(pct, moe),
                   values_fill = list(pct = 0, moe = 0)) %>%
-      select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n"))
+      select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n")) %>%
+      arrange({{x}}, {{z}})
   }
 
   # remove n if required

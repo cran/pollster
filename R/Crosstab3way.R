@@ -35,6 +35,12 @@ crosstab_3way <- function(df, x, y, z,
                           n = TRUE, pct_type = "row", format = "wide",
                           unwt_n = FALSE){
 
+  # make sure no weights are NA
+  w <- df %>% pull({{weight}})
+  if(length(w[is.na(w)]) > 0){
+    stop("The weight variable contains missing values.", call. = FALSE)
+  }
+
   # make sure the arguments are all correct
   stopifnot(pct_type %in% c("row", "cell"),
             format %in% c("wide", "long"))
@@ -70,7 +76,8 @@ crosstab_3way <- function(df, x, y, z,
       d.output <- d.output %>%
         pivot_wider(names_from = {{y}}, values_from = pct,
                     values_fill = list(pct = 0), names_sort = TRUE) %>%
-        select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n"))
+        select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n")) %>%
+        arrange({{x}}, {{z}})
     }
   } else if(pct_type == "cell"){
     d.output <- df %>%
@@ -102,7 +109,8 @@ crosstab_3way <- function(df, x, y, z,
       d.output <- d.output %>%
         pivot_wider(names_from = {{y}}, values_from = pct,
                     values_fill = list(pct = 0), names_sort = TRUE) %>%
-        select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n"))
+        select(-one_of("n", "unweighted_n"), one_of("n", "unweighted_n")) %>%
+        arrange({{x}}, {{z}})
     }
   }
 
